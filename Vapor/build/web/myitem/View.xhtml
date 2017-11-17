@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+  <ui:composition>
+
+    <p:dialog id="MyitemViewDlg" widgetVar="MyitemViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMyitemTitle}">
+      <h:form id="MyitemViewForm">
+        <h:panelGroup id="display">
+          <p:panelGrid columns="2" rendered="#{myitemController.selected != null}">
+            <h:outputText value="#{bundle.ViewMyitemLabel_id}"/>
+            <h:outputText value="#{myitemController.selected.id}" title="#{bundle.ViewMyitemTitle_id}"/>
+            <h:outputText value="#{bundle.ViewMyitemLabel_name}"/>
+            <h:outputText value="#{myitemController.selected.name}" title="#{bundle.ViewMyitemTitle_name}"/>
+            <h:outputText value="#{bundle.ViewMyitemLabel_price}"/>
+            <h:outputText value="#{myitemController.selected.price}" title="#{bundle.ViewMyitemTitle_price}"/>
+            <h:outputText value="#{bundle.ViewMyitemLabel_description}"/>
+            <h:outputText value="#{myitemController.selected.description}" title="#{bundle.ViewMyitemTitle_description}"/>
+            <h:outputText value="#{bundle.ViewMyitemLabel_pubTime}"/>
+            <h:outputText value="#{myitemController.selected.pubTime}" title="#{bundle.ViewMyitemTitle_pubTime}">
+              <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+            <h:outputText value="#{bundle.ViewMyitemLabel_timesOfBuy}"/>
+            <h:outputText value="#{myitemController.selected.timesOfBuy}" title="#{bundle.ViewMyitemTitle_timesOfBuy}"/>
+            <h:outputText value="#{bundle.ViewMyitemLabel_gameClassid}"/>
+            <h:outputText value="#{myitemController.selected.gameClassid}" title="#{bundle.ViewMyitemTitle_gameClassid}"/>
+            <h:outputText value="#{bundle.ViewMyitemLabel_gameDeveloperid}"/>
+            <h:outputText value="#{myitemController.selected.gameDeveloperid}" title="#{bundle.ViewMyitemTitle_gameDeveloperid}"/>
+          </p:panelGrid>
+          <p:commandButton value="#{bundle.Close}" onclick="MyitemViewDialog.hide()"/>
+        </h:panelGroup>
+      </h:form>
+    </p:dialog>
+
+  </ui:composition>
+</html>

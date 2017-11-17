@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <title>游戏库 - Vapor</title>
+
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </h:head>
+  <h:body>
+    <div class="container">
+      <header class="header">
+        <div class="content">
+          <div class="logo">
+            <h:link outcome="index"><img src="./assets/images/vapor.png" alt="Vapor" /></h:link>
+          </div>
+
+          <nav class="nav">
+            <h:link class="item" outcome="index">商店</h:link>
+            <h:form style="display: inline-block;">
+              <h:commandLink class="item" action="#{homePage.navigateToLibrary()}">游戏库</h:commandLink>
+            </h:form>
+          </nav>
+
+          <div class="right">
+            <h:panelGroup layout="block" id="reg-login" rendered="#{!authBean.loginState}">
+              <h:link class="item" outcome="register">注册</h:link>
+              <h:link class="item" outcome="login">登录</h:link>
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{authBean.loginState}">
+              <div class="cart">
+                <h:link outcome="cart"><i class="fa fa-shopping-cart"></i></h:link>
+              </div>
+              <div class="avatar">
+                <h:link outcome="user-library">
+                  <div class="cover"></div>
+                  <h:graphicImage name="images/avatar.jpg" />
+                </h:link>
+              </div>
+              <div class="info">
+                <p class="name"><h:outputText value="#{authBean.loggedInUser.username}" /></p>
+                <p class="balance"><h:outputText value="#{authBean.loggedInUser.charge}" /></p>
+              </div>
+            </h:panelGroup>
+          </div>
+
+          <div class="search">
+            <form id="search-form" method="get" action="/Vapor/faces/search.xhtml">
+              <div class="search-box">
+                <input name="keyword" type="text" placeholder="搜索" />
+                <a href="#" onclick="submitSearchForm();"><i class="fa fa-search"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </header>
+
+      <div class="content page-content">
+        <div id="main">
+          <div class="tab-area">
+            <div class="tab-header-bar">
+              <div class="tab-header active">
+                <a href="#" class="tab-header-text">游戏库</a>
+              </div>
+              <div class="tab-header">
+                <h:link outcome="user-balance" class="tab-header-text">账户余额</h:link>
+              </div>
+              <div class="tab-header" style="float: right;">
+                <h:form>
+                  <h:commandLink action="#{authBean.logout()}" class="tab-header-text">登出</h:commandLink>
+                </h:form>
+              </div>
+            </div>
+            <div class="tab-content">
+              <div class="game-list">
+                
+                <ui:repeat value="#{userBean.games}" var="game">
+                  <div class="game">
+                    <h:link outcome="item">
+                      <f:param name="id" value="#{game.id}" />
+                      <h:graphicImage class="game-cover" name="images/covers/#{game.id}.jpg" />
+                    </h:link>
+                  </div>
+                </ui:repeat>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="sidebar">
+          <div class="avatar">
+            <h:graphicImage name="images/avatar.jpg" width="220" height="220" />
+          </div>
+          <div class="info">
+            <div class="username">
+              <h1><h:outputText value="#{userBean.currentUser.username}" /></h1>
+            </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+
+      <footer class="footer">
+        <div class="content">
+          <div class="footer-text">
+            <p>© 2015 Vapor. All rights reserved.</p>
+            <p><a href="#">关于 Vapor</a> | <a href="#">帮助</a> | <a href="#">加入我们</a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="./assets/js/jquery-2.1.4.min.js"></script>
+    <script src="./assets/js/vapor.js"></script>
+  </h:body>
+</html>
+

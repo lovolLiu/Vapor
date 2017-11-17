@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+  <h:head>
+    <title>登录 - Vapor</title>
+
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </h:head>
+  <h:body>
+    <div class="container">
+      <header class="header">
+        <div class="content">
+          <div class="logo">
+            <h:link outcome="index"><img src="./assets/images/vapor.png" alt="Vapor" /></h:link>
+          </div>
+
+          <nav class="nav">
+            <h:link class="item" outcome="index">商店</h:link>
+            <h:form style="display: inline-block;">
+              <h:commandLink class="item" action="#{homePage.navigateToLibrary()}">游戏库</h:commandLink>
+            </h:form>
+          </nav>
+
+          <div class="right">
+            <h:panelGroup layout="block" id="reg-login" rendered="#{!authBean.loginState}">
+              <h:link class="item" outcome="register">注册</h:link>
+              <h:link class="item" outcome="login">登录</h:link>
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{authBean.loginState}">
+              <div class="cart">
+                <h:link outcome="cart"><i class="fa fa-shopping-cart"></i></h:link>
+              </div>
+              <div class="avatar">
+                <h:link outcome="user-library">
+                  <div class="cover"></div>
+                  <h:graphicImage name="images/avatar.jpg" />
+                </h:link>
+              </div>
+              <div class="info">
+                <p class="name"><h:outputText value="#{authBean.loggedInUser.username}" /></p>
+                <p class="balance"><h:outputText value="#{authBean.loggedInUser.charge}" /></p>
+              </div>
+            </h:panelGroup>
+          </div>
+
+          <div class="search">
+            <form id="search-form" method="get" action="/Vapor/faces/search.xhtml">
+              <div class="search-box">
+                <input name="keyword" type="text" placeholder="搜索" />
+                <a href="#" onclick="submitSearchForm();"><i class="fa fa-search"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </header>
+
+      <div class="content page-content" style="min-height: 500px;">
+        <div class="login-panel">
+          <div class="left-panel">
+            <h2 class="section-title">登录</h2>
+            <p class="description">使用已有帐号</p>
+            
+            <h:form>
+              <label for="username">用户名</label>
+              <h:inputText class="input-field" id="username" value="#{loginBean.username}" required="required" />
+              
+              <label for="password">密码</label>
+              <h:inputSecret class="input-field" id="password" value="#{loginBean.password}" required="required" />
+              
+              <div>
+                <h:commandButton class="button" action="#{loginBean.userLogin}" value="登录" />
+              </div>
+            </h:form>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="right-panel">
+            <h2 class="section-title">没有帐号？</h2>
+            <p class="description">注册一个新帐号吧</p>
+
+            <p class="description" id="new-account-info">现在就免费注册 Vapor 帐号，尽享游戏乐趣。</p>
+
+            <h:link class="button" outcome="register">注册</h:link>
+          </div>
+
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="content">
+          <div class="footer-text">
+            <p>© 2015 Vapor. All rights reserved.</p>
+            <p><a href="#">关于 Vapor</a> | <a href="#">帮助</a> | <a href="#">加入我们</a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="./assets/js/jquery-2.1.4.min.js"></script>
+    <script src="./assets/js/vapor.js"></script>
+  </h:body>
+</html>
+

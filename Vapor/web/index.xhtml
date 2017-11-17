@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+  <h:head>
+    <title>Vapor</title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </h:head>
+  <h:body>
+    <div class="container">
+      <header class="header">
+        <div class="content">
+          <div class="logo">
+            <h:link outcome="index"><img src="./assets/images/vapor.png" alt="Vapor" /></h:link>
+          </div>
+
+          <nav class="nav">
+            <h:link class="item" outcome="index">商店</h:link>
+            <h:form style="display: inline-block;">
+              <h:commandLink class="item" action="#{homePage.navigateToLibrary()}">游戏库</h:commandLink>
+            </h:form>
+          </nav>
+
+          <div class="right">
+            <h:panelGroup layout="block" id="reg-login" rendered="#{!authBean.loginState}">
+              <h:link class="item" outcome="register">注册</h:link>
+              <h:link class="item" outcome="login">登录</h:link>
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{authBean.loginState}">
+              <div class="cart">
+                <h:link outcome="cart"><i class="fa fa-shopping-cart"></i></h:link>
+              </div>
+              <div class="avatar">
+                <h:link outcome="user-library">
+                  <div class="cover"></div>
+                  <h:graphicImage name="images/avatar.jpg" />
+                </h:link>
+              </div>
+              <div class="info">
+                <p class="name"><h:outputText value="#{authBean.loggedInUser.username}" /></p>
+                <p class="balance"><h:outputText value="#{authBean.loggedInUser.charge}" /></p>
+              </div>
+            </h:panelGroup>
+          </div>
+
+          <div class="search">
+            <form id="search-form" method="get" action="/Vapor/faces/search.xhtml">
+              <div class="search-box">
+                <input name="keyword" type="text" placeholder="搜索" />
+                <a href="#" onclick="submitSearchForm();"><i class="fa fa-search"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </header>
+
+      <div class="content page-content">
+        <div id="featured">
+          <h2 class="title">特色游戏</h2>
+          <div id="carousel">
+            <h:link outcome="item">
+              <f:param name="id" value="25" />
+              <h:graphicImage name="images/featured/25.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="23" />
+              <h:graphicImage name="images/featured/23.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="10" />
+              <h:graphicImage name="images/featured/10.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="11" />
+              <h:graphicImage name="images/featured/11.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="30" />
+              <h:graphicImage name="images/featured/30.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="15" />
+              <h:graphicImage name="images/featured/15.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="18" />
+              <h:graphicImage name="images/featured/18.jpg" />
+            </h:link>
+            <h:link outcome="item">
+              <f:param name="id" value="29" />
+              <h:graphicImage name="images/featured/29.jpg" />
+            </h:link>
+          </div>
+        </div>
+
+        <div id="main">
+          <h3 class="section-title">全新上架</h3>
+          <div id="newest" class="game-list">
+            <ui:repeat value="#{homePage.newestGames}" var="game">
+              <div class="game">
+                <h:link outcome="item">
+                  <f:param name="id" value="#{game.id}" />
+                  <h:graphicImage class="game-cover" name="images/covers/#{game.id}.jpg" />
+                  <div class="game-price-badge">
+                    <label class="game-price">$<h:outputText value="#{game.price}" /></label>
+                  </div>
+                </h:link>
+              </div>
+            </ui:repeat>
+          </div>
+          <h3 class="section-title">热门推荐</h3>
+          <div id="hotest" class="game-list">
+            <ui:repeat value="#{homePage.hotestGames}" var="game">
+              <div class="game">
+                <h:link outcome="item">
+                  <f:param name="id" value="#{game.id}" />
+                  <h:graphicImage class="game-cover" name="images/covers/#{game.id}.jpg" />
+                  <div class="game-price-badge">
+                    <label class="game-price">$<h:outputText value="#{game.price}" /></label>
+                  </div>
+                </h:link>
+              </div>
+            </ui:repeat>
+          </div>
+        </div>
+
+        <div id="sidebar">
+          <div class="block">
+            <div class="block-header">
+              <label>分类</label>
+            </div>
+            <div class="block-content">
+              <ui:repeat value="#{homePage.categories}" var="category">
+                <h:link outcome="search" class="item">
+                  <f:param name="category" value="#{category.id}" />
+                  <h:outputText value="#{category.CName}" />
+                </h:link>
+              </ui:repeat>
+            </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+
+      <footer class="footer">
+        <div class="content">
+          <div class="footer-text">
+            <p>© 2015 Vapor. All rights reserved.</p>
+            <p><a href="#">关于 Vapor</a> | <a href="#">帮助</a> | <a href="#">加入我们</a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="./assets/js/jquery-2.1.4.min.js"></script>
+    <script src="./assets/js/vapor.js"></script>
+    <script src="./assets/js/jquery.waterwheelCarousel.min.js"></script>
+    <script>
+                  $(document).ready(function () {
+                    $("#carousel").waterwheelCarousel({
+                    });
+                  });
+    </script>
+  </h:body>
+
+</html>

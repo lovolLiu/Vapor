@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <title>购物车 - Vapor</title>
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css"/>
+  </h:head>
+  <h:body>
+    <div class="container">
+      <header class="header">
+        <div class="content">
+          <div class="logo">
+            <h:link outcome="index"><img src="./assets/images/vapor.png" alt="Vapor" /></h:link>
+          </div>
+
+          <nav class="nav">
+            <h:link class="item" outcome="index">商店</h:link>
+            <h:form style="display: inline-block;">
+              <h:commandLink class="item" action="#{homePage.navigateToLibrary()}">游戏库</h:commandLink>
+            </h:form>
+          </nav>
+
+          <div class="right">
+            <h:panelGroup layout="block" id="reg-login" rendered="#{!authBean.loginState}">
+              <h:link class="item" outcome="register">注册</h:link>
+              <h:link class="item" outcome="login">登录</h:link>
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{authBean.loginState}">
+              <div class="cart">
+                <h:link outcome="cart"><i class="fa fa-shopping-cart"></i></h:link>
+              </div>
+              <div class="avatar">
+                <h:link outcome="user-library">
+                  <div class="cover"></div>
+                  <h:graphicImage name="images/avatar.jpg" />
+                </h:link>
+              </div>
+              <div class="info">
+                <p class="name"><h:outputText value="#{authBean.loggedInUser.username}" /></p>
+                <p class="balance"><h:outputText value="#{authBean.loggedInUser.charge}" /></p>
+              </div>
+            </h:panelGroup>
+          </div>
+
+          <div class="search">
+            <form id="search-form" method="get" action="/Vapor/faces/search.xhtml">
+              <div class="search-box">
+                <input name="keyword" type="text" placeholder="搜索" />
+                <a href="#" onclick="submitSearchForm();"><i class="fa fa-search"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </header>
+
+      <div class="cart-items">
+        <div class="content">
+          <h3 class="title">我的购物车</h3>
+          <div class="cart-item-list">
+            <ui:repeat value="#{cart.items}" var="cartItem">
+              <div class="cart-item">
+                <div class="cart-item-img">
+                  <h:link outcome="item">
+                    <f:param name="id" value="#{cartItem.myItemid.id}" />
+                    <h:graphicImage name="images/covers/#{cartItem.myItemid.id}.jpg" style="border: none; width: 100%;"/>
+                  </h:link>
+                </div>
+                <div class="cart-item-title"><h:outputText value="#{cartItem.myItemid.name}" /></div>
+                <div class="cart-item-de">
+                  <div class="cart-item-price"><h:outputText value="$#{cartItem.myItemid.price}" /></div>
+                  <div class="cart-item-remove">
+                    <h:form>
+                      <h:commandLink class="remove" action="#{cart.removeItem(cartItem.myItemid.id)}">Remove</h:commandLink>
+                    </h:form>
+                  </div>
+                </div>
+              </div>
+            </ui:repeat>
+          </div>
+
+          <div class="checkout-content">
+            <div class="checkout-total-price">
+              <div class="sum">总计：<h:outputText value="#{cart.totalPriceText}" /></div>
+              <h:panelGroup layout="block" class="checkout" rendered="#{cart.isBalanceSufficient}">
+                <h:form>
+                  <h:commandLink class="checkout" action="#{cart.checkOut()}"
+                                 value="结算" />
+                </h:form>
+              </h:panelGroup>
+              <h:panelGroup layout="block" class="insufficient" rendered="#{!cart.isBalanceSufficient}">
+                <h:form>
+                  <a href="#" class="insufficient">余额不足</a>
+                </h:form>
+              </h:panelGroup>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </h:body>
+</html>
+

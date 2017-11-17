@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+  <ui:composition>
+
+    <p:dialog id="MyitemCreateDlg" widgetVar="MyitemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMyitemTitle}">
+      <h:form id="MyitemCreateForm">
+        <h:panelGroup id="display">
+          <p:panelGrid columns="2" rendered="#{myitemController.selected != null}">
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_id}" for="id" />
+            <p:inputText id="id" value="#{myitemController.selected.id}" title="#{bundle.CreateMyitemTitle_id}" required="true" requiredMessage="#{bundle.CreateMyitemRequiredMessage_id}"/>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_name}" for="name" />
+            <p:inputText id="name" value="#{myitemController.selected.name}" title="#{bundle.CreateMyitemTitle_name}" required="true" requiredMessage="#{bundle.CreateMyitemRequiredMessage_name}"/>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_price}" for="price" />
+            <p:inputText id="price" value="#{myitemController.selected.price}" title="#{bundle.CreateMyitemTitle_price}" required="true" requiredMessage="#{bundle.CreateMyitemRequiredMessage_price}"/>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_description}" for="description" />
+            <p:inputText id="description" value="#{myitemController.selected.description}" title="#{bundle.CreateMyitemTitle_description}" required="true" requiredMessage="#{bundle.CreateMyitemRequiredMessage_description}"/>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_pubTime}" for="pubTime" />
+            <p:calendar id="pubTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{myitemController.selected.pubTime}" title="#{bundle.EditMyitemTitle_pubTime}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_pubTime}" showOn="button"/>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_timesOfBuy}" for="timesOfBuy" />
+            <p:inputText id="timesOfBuy" value="#{myitemController.selected.timesOfBuy}" title="#{bundle.CreateMyitemTitle_timesOfBuy}" required="true" requiredMessage="#{bundle.CreateMyitemRequiredMessage_timesOfBuy}"/>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_gameClassid}" for="gameClassid" />
+            <p:selectOneMenu id="gameClassid" value="#{myitemController.selected.gameClassid}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_gameClassid}">
+              <f:selectItems value="#{gameclassController.itemsAvailableSelectOne}"
+                             var="gameClassidItem"
+                             itemValue="#{gameClassidItem}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="#{bundle.CreateMyitemLabel_gameDeveloperid}" for="gameDeveloperid" />
+            <p:selectOneMenu id="gameDeveloperid" value="#{myitemController.selected.gameDeveloperid}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_gameDeveloperid}">
+              <f:selectItems value="#{gamedeveloperController.itemsAvailableSelectOne}"
+                             var="gameDeveloperidItem"
+                             itemValue="#{gameDeveloperidItem}"/>
+            </p:selectOneMenu>
+          </p:panelGrid>
+          <p:commandButton actionListener="#{myitemController.create}" value="#{bundle.Save}" update="display,:MyitemListForm:datalist,:growl" oncomplete="handleSubmit(args,'MyitemCreateDialog');"/>
+          <p:commandButton value="#{bundle.Cancel}" onclick="MyitemCreateDialog.hide()"/>
+        </h:panelGroup>
+      </h:form>
+    </p:dialog>
+
+  </ui:composition>
+</html>

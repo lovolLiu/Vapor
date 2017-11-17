@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+  <ui:composition>
+
+    <p:dialog id="MyitemEditDlg" widgetVar="MyitemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMyitemTitle}">
+      <h:form id="MyitemEditForm">
+        <h:panelGroup id="display">
+          <p:panelGrid columns="2" rendered="#{myitemController.selected != null}">
+            <p:outputLabel value="#{bundle.EditMyitemLabel_id}" for="id" />
+            <p:inputText id="id" value="#{myitemController.selected.id}" title="#{bundle.EditMyitemTitle_id}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_id}"/>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_name}" for="name" />
+            <p:inputText id="name" value="#{myitemController.selected.name}" title="#{bundle.EditMyitemTitle_name}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_name}"/>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_price}" for="price" />
+            <p:inputText id="price" value="#{myitemController.selected.price}" title="#{bundle.EditMyitemTitle_price}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_price}"/>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_description}" for="description" />
+            <p:inputText id="description" value="#{myitemController.selected.description}" title="#{bundle.EditMyitemTitle_description}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_description}"/>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_pubTime}" for="pubTime" />
+            <p:calendar id="pubTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{myitemController.selected.pubTime}" title="#{bundle.EditMyitemTitle_pubTime}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_pubTime}" showOn="button"/>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_timesOfBuy}" for="timesOfBuy" />
+            <p:inputText id="timesOfBuy" value="#{myitemController.selected.timesOfBuy}" title="#{bundle.EditMyitemTitle_timesOfBuy}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_timesOfBuy}"/>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_gameClassid}" for="gameClassid" />
+            <p:selectOneMenu id="gameClassid" value="#{myitemController.selected.gameClassid}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_gameClassid}">
+              <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+              <f:selectItems value="#{gameclassController.itemsAvailableSelectOne}"
+                             var="gameClassidItem"
+                             itemValue="#{gameClassidItem}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="#{bundle.EditMyitemLabel_gameDeveloperid}" for="gameDeveloperid" />
+            <p:selectOneMenu id="gameDeveloperid" value="#{myitemController.selected.gameDeveloperid}" required="true" requiredMessage="#{bundle.EditMyitemRequiredMessage_gameDeveloperid}">
+              <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+              <f:selectItems value="#{gamedeveloperController.itemsAvailableSelectOne}"
+                             var="gameDeveloperidItem"
+                             itemValue="#{gameDeveloperidItem}"/>
+            </p:selectOneMenu>
+          </p:panelGrid>
+          <p:commandButton actionListener="#{myitemController.update}" value="#{bundle.Save}" update="display,:MyitemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MyitemEditDialog');"/>
+          <p:commandButton value="#{bundle.Cancel}" onclick="MyitemEditDialog.hide()"/>
+        </h:panelGroup>
+      </h:form>
+    </p:dialog>
+
+  </ui:composition>
+</html>
